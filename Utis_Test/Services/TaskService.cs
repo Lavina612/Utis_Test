@@ -13,31 +13,44 @@ namespace Utis_Test.Services
             _taskRepository = taskRepository;
         }
 
-        public IEnumerable<TaskModel> GetAllTasks()
+        public List<TaskModel> GetAllTasks()
         {
-            return _taskRepository.GetAllTasks();
+            return _taskRepository.GetAll();
         }
 
         public TaskModel? GetTaskById(int id)
         {
-            return _taskRepository.GetTaskById(id);
+            return _taskRepository.GetById(id);
         }
 
-        public TaskModel AddTask(TaskModel task)
+        public int AddTask(TaskModel addingTask)
         {
-            _taskRepository.AddTask(task);
-            return task;
+            _taskRepository.Add(addingTask);
+            return addingTask.Id;
         }
 
-        public TaskModel? UpdateTask(int id, TaskModel task)
+        public bool UpdateTask(int id, TaskModel newTask)
         {
-            var updatingTask = _taskRepository.UpdateTask(id, task);
-            return updatingTask;
+            var updatingTask = _taskRepository.GetById(id);
+
+            if (updatingTask != null)
+            {
+                updatingTask.UpdateProperties(newTask);
+                _taskRepository.Update(updatingTask);
+                return true;
+            }
+
+            return false;
         }
 
         public void DeleteTask(int id)
         {
-            _taskRepository.DeleteTask(id);
+            var deletingTask = _taskRepository.GetById(id);
+
+            if (deletingTask != null)
+            {
+                _taskRepository.Delete(deletingTask);
+            }
         }
     }
 }

@@ -38,22 +38,17 @@ namespace Utis_Test.Controllers
         [HttpPost]
         public IActionResult AddTask([FromBody] TaskModel task)
         {
-            var addedTask = _taskService.AddTask(task);
+            var addedTaskId = _taskService.AddTask(task);
 
-            return CreatedAtAction(nameof(GetTaskById), new { id = addedTask.Id }, addedTask);
+            return CreatedAtAction(nameof(AddTask), new { id = addedTaskId }, task);
         }
 
         [HttpPut("{id}")]
         public IActionResult UpdateTask(int id, [FromBody] TaskModel task)
         {
-            var updatedTask = _taskService.UpdateTask(id, task);
-
-            if (updatedTask == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(updatedTask);
+            return _taskService.UpdateTask(id, task)
+                ? Ok() 
+                : NotFound();
         }
 
         [HttpDelete("{id}")]

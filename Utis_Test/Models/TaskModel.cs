@@ -21,12 +21,12 @@ namespace Utis_Test.Models
             Status = status;
         }
 
-        public void UpdateProperties(TaskModel task)
+        public void UpdateProperties(TaskModel newTask)
         {
-            Title = task.Title;
-            Description = task.Description;
-            DueDate = task.DueDate;
-            Status = task.Status;
+            Title = newTask.Title;
+            Description = newTask.Description;
+            DueDate = newTask.DueDate;
+            Status = newTask.Status;
         }
     }
 }

@@ -14,46 +14,32 @@ namespace Utis_Test.Repositories
             _context = context;
         }
 
-        public IEnumerable<TaskModel> GetAllTasks()
+        public List<TaskModel> GetAll()
         {
-            return _context.Tasks.AsEnumerable();
+            return _context.Tasks.ToList();
         }
 
-        public TaskModel? GetTaskById(int id)
+        public TaskModel? GetById(int id)
         {
             return _context.Tasks.FirstOrDefault(x => x.Id == id);
         }
 
-        public TaskModel AddTask(TaskModel task)
+        public void Add(TaskModel addingTask)
         {
-            _context.Tasks.Add(task);
+            _context.Tasks.Add(addingTask);
             _context.SaveChanges();
-            return task;
         }
 
-        public TaskModel? UpdateTask(int id, TaskModel task)
+        public void Update(TaskModel updatingTask)
         {
-            var updatingTask = GetTaskById(id);
-
-            if (updatingTask != null)
-            {
-                updatingTask.UpdateProperties(task);
-                _context.SaveChanges();
-                return updatingTask;
-            }
-
-            return null;
+            _context.Tasks.Update(updatingTask);
+            _context.SaveChanges();
         }
 
-        public void DeleteTask(int id)
+        public void Delete(TaskModel deletingTask)
         {
-            var task = GetTaskById(id);
-
-            if (task != null)
-            {
-                _context.Tasks.Remove(task);
-                _context.SaveChanges();
-            }
+            _context.Tasks.Remove(deletingTask);
+            _context.SaveChanges();
         }
     }
 }

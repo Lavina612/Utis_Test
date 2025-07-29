@@ -5,14 +5,14 @@ namespace Utis_Test.Interfaces
 {
     public interface ITaskRepository
     {
-        public IEnumerable<TaskModel> GetAllTasks();
+        public List<TaskModel> GetAll();
 
-        public TaskModel? GetTaskById(int id);
+        public TaskModel? GetById(int id);
 
-        public TaskModel AddTask(TaskModel task);
+        public void Add(TaskModel addingTask);
 
-        public TaskModel? UpdateTask(int id, TaskModel task);
+        public void Update(TaskModel updatingTask);
 
-        public void DeleteTask(int id);
+        public void Delete(TaskModel deletingTask);
     }
 }
