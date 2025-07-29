@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Utis_Test.Data;
 using Utis_Test.Interfaces;
 using Utis_Test.Services;
 
@@ -14,12 +15,12 @@ namespace Utis_Test
         {
             builder.Services.AddControllers();
 
-            builder.Services.AddScoped<IAppDbContext, AppDbContext>();
+            builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             builder.Services.AddScoped<ITaskService, TaskService>();
 
             var conString = builder.Configuration.GetConnectionString("DefaultConnection")
                 ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(conString));
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(conString));
         }
 
         public static void Main(string[] args)

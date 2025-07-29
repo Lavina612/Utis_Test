@@ -4,15 +4,15 @@ using System.Linq;
 using Utis_Test.Interfaces;
 using Utis_Test.Models;
 
-namespace Utis_Test.Services
+namespace Utis_Test.Data
 {
-    public class AppDbContext : DbContext, IAppDbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         //public DbSet<TaskStatus> TaskStatuses { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
         public DbSet<TaskModel> Tasks { get; set; }
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public IEnumerable<TaskModel> GetAllTasks()
         {

@@ -3,7 +3,7 @@ using Utis_Test.Models;
 
 namespace Utis_Test.Interfaces
 {
-    public interface IAppDbContext
+    public interface IApplicationDbContext
     {
         public IEnumerable<TaskModel> GetAllTasks();
 

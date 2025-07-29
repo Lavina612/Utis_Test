@@ -6,9 +6,9 @@ namespace Utis_Test.Services
 {
     public class TaskService : ITaskService
     {
-        private readonly IAppDbContext _context;
+        private readonly IApplicationDbContext _context;
 
-        public TaskService(IAppDbContext context)
+        public TaskService(IApplicationDbContext context)
         {
             _context = context;
         }
