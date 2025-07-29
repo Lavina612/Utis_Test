@@ -6,38 +6,38 @@ namespace Utis_Test.Services
 {
     public class TaskService : ITaskService
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ITaskRepository _taskRepository;
 
-        public TaskService(IApplicationDbContext context)
+        public TaskService(ITaskRepository taskRepository)
         {
-            _context = context;
+            _taskRepository = taskRepository;
         }
 
         public IEnumerable<TaskModel> GetAllTasks()
         {
-            return _context.GetAllTasks();
+            return _taskRepository.GetAllTasks();
         }
 
         public TaskModel? GetTaskById(int id)
         {
-            return _context.GetTaskById(id);
+            return _taskRepository.GetTaskById(id);
         }
 
         public TaskModel AddTask(TaskModel task)
         {
-            _context.AddTask(task);
+            _taskRepository.AddTask(task);
             return task;
         }
 
         public TaskModel? UpdateTask(int id, TaskModel task)
         {
-            var updatingTask = _context.UpdateTask(id, task);
+            var updatingTask = _taskRepository.UpdateTask(id, task);
             return updatingTask;
         }
 
         public void DeleteTask(int id)
         {
-            _context.DeleteTask(id);
+            _taskRepository.DeleteTask(id);
         }
     }
 }

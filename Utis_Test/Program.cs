@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using Utis_Test.Data;
 using Utis_Test.Interfaces;
+using Utis_Test.Repositories;
 using Utis_Test.Services;
 
 namespace Utis_Test
@@ -17,6 +18,7 @@ namespace Utis_Test
 
             builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             builder.Services.AddScoped<ITaskService, TaskService>();
+            builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
             var conString = builder.Configuration.GetConnectionString("DefaultConnection")
                 ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");

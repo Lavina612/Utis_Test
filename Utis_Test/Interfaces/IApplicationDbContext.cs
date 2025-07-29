@@ -1,18 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using Utis_Test.Models;
 
 namespace Utis_Test.Interfaces
 {
     public interface IApplicationDbContext
     {
-        public IEnumerable<TaskModel> GetAllTasks();
+        public DbSet<TaskModel> Tasks { get; set; }
 
-        public TaskModel? GetTaskById(int id);
-
-        public TaskModel AddTask(TaskModel task);
-
-        public TaskModel? UpdateTask(int id, TaskModel task);
-
-        public void DeleteTask(int id);
+        public int SaveChanges();
     }
 }
