@@ -10,12 +10,9 @@ namespace Utis_Test.Services
     {
         //public DbSet<TaskStatus> TaskStatuses { get; set; }
 
-        public DbSet<TaskModel> Tasks { get; set; }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql("Server=localhost;Port=5433;Database=postgres;User Id=postgres;Password=***;");
-        }
+        public DbSet<TaskModel> Tasks { get; set; }
 
         public IEnumerable<TaskModel> GetAllTasks()
         {

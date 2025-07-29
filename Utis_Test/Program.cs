@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using Utis_Test.Interfaces;
 using Utis_Test.Services;
 
@@ -7,15 +10,24 @@ namespace Utis_Test
 {
     public class Program
     {
+        public static void ConfigureServices(WebApplicationBuilder builder)
+        {
+            builder.Services.AddControllers();
+
+            builder.Services.AddScoped<IAppDbContext, AppDbContext>();
+            builder.Services.AddScoped<ITaskService, TaskService>();
+
+            var conString = builder.Configuration.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(conString));
+        }
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
-            builder.Services.AddControllers();
-            builder.Services.AddScoped<IAppDbContext, AppDbContext>();
-            builder.Services.AddScoped<ITaskService, TaskService>();
+            ConfigureServices(builder);
 
             var app = builder.Build();
 
