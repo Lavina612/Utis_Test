@@ -1,10 +1,11 @@
 ﻿using System;
+using Utis_Test.Data.Entities;
 
 namespace Utis_Test.Models
 {
     public class TaskModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public string Title { get; set; }
 
@@ -12,21 +13,20 @@ namespace Utis_Test.Models
 
         public DateTime DueDate { get; set; }
 
-        public TaskStatus Status { get; set; }
+        public int StatusId { get; set; }
 
-        public TaskModel(string title, string description, DateTime dueDate, TaskStatus status) { 
+        public TaskModel(int? id, string title, string description, DateTime dueDate, int statusId)
+        {
+            Id = id;
             Title = title;
             Description = description;
             DueDate = dueDate;
-            Status = status;
+            StatusId = statusId;
         }
 
-        public void UpdateProperties(TaskModel newTask)
+        public TaskEntity ToTaskEntity()
         {
-            Title = newTask.Title;
-            Description = newTask.Description;
-            DueDate = newTask.DueDate;
-            Status = newTask.Status;
+            return new TaskEntity(Id ?? 0, Title, Description, DueDate, StatusId);
         }
     }
 }

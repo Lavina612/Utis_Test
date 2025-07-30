@@ -7,14 +7,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Utis_Test.Data;
 
-
 #nullable disable
 
 namespace Utis_Test.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250728131526_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250730161300_Migration_1")]
+    partial class Migration_1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,7 +49,46 @@ namespace Utis_Test.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TaskModels");
+                    b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("Utis_Test.Models.TaskStatuses", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("StatusName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TaskStatuses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            StatusName = "New"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            StatusName = "InProgress"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            StatusName = "Completed"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            StatusName = "Overdue"
+                        });
                 });
 #pragma warning restore 612, 618
         }

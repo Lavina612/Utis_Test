@@ -1,18 +1,21 @@
 ﻿using System.Collections.Generic;
+using Utis_Test.Data.Entities;
 using Utis_Test.Models;
 
 namespace Utis_Test.Interfaces
 {
     public interface ITaskRepository
     {
-        public List<TaskModel> GetAll();
+        public List<TaskEntity> GetAll();
 
-        public TaskModel? GetById(int id);
+        public List<TaskEntity> GetByStatus(string status);
 
-        public void Add(TaskModel addingTask);
+        public TaskEntity? GetById(int id);
 
-        public void Update(TaskModel updatingTask);
+        public void Add(TaskEntity addingTask);
 
-        public void Delete(TaskModel deletingTask);
+        public void Update(TaskEntity updatingTask);
+
+        public void Delete(TaskEntity deletingTask);
     }
 }

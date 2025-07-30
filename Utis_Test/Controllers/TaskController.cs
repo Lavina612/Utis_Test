@@ -22,6 +22,13 @@ namespace Utis_Test.Controllers
             return Ok(tasks);
         }
 
+        [HttpGet("filter")]
+        public IActionResult GetTasksByStatus([FromQuery] string status)
+        {
+            var tasks = _taskService.GetTasksByStatus(status);
+            return Ok(tasks);
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetTaskById(int id)
         {
@@ -38,9 +45,9 @@ namespace Utis_Test.Controllers
         [HttpPost]
         public IActionResult AddTask([FromBody] TaskModel task)
         {
-            var addedTaskId = _taskService.AddTask(task);
+            task.Id = _taskService.AddTask(task);
 
-            return CreatedAtAction(nameof(AddTask), new { id = addedTaskId }, task);
+            return CreatedAtAction(nameof(AddTask), new { id = task.Id }, task);
         }
 
         [HttpPut("{id}")]

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Utis_Test.Data.Entities;
 using Utis_Test.Interfaces;
 using Utis_Test.Models;
 
@@ -14,29 +16,34 @@ namespace Utis_Test.Repositories
             _context = context;
         }
 
-        public List<TaskModel> GetAll()
+        public List<TaskEntity> GetAll()
         {
             return _context.Tasks.ToList();
         }
 
-        public TaskModel? GetById(int id)
+        public List<TaskEntity> GetByStatus(string status)
+        {
+            return _context.Tasks.Where(x => x.Status.StatusName.ToLower() == status.ToLower()).ToList();
+        }
+
+        public TaskEntity? GetById(int id)
         {
             return _context.Tasks.FirstOrDefault(x => x.Id == id);
         }
 
-        public void Add(TaskModel addingTask)
+        public void Add(TaskEntity addingTask)
         {
             _context.Tasks.Add(addingTask);
             _context.SaveChanges();
         }
 
-        public void Update(TaskModel updatingTask)
+        public void Update(TaskEntity updatingTask)
         {
             _context.Tasks.Update(updatingTask);
             _context.SaveChanges();
         }
 
-        public void Delete(TaskModel deletingTask)
+        public void Delete(TaskEntity deletingTask)
         {
             _context.Tasks.Remove(deletingTask);
             _context.SaveChanges();

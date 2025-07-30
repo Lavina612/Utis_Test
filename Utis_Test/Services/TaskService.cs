@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Utis_Test.Interfaces;
 using Utis_Test.Models;
 
@@ -15,18 +16,27 @@ namespace Utis_Test.Services
 
         public List<TaskModel> GetAllTasks()
         {
-            return _taskRepository.GetAll();
+            var taskEntities = _taskRepository.GetAll();
+            return taskEntities.Select(x => x.ToTaskModel()).ToList();
+        }
+
+        public List<TaskModel> GetTasksByStatus(string status)
+        {
+            var taskEntities = _taskRepository.GetByStatus(status);
+            return taskEntities.Select(x => x.ToTaskModel()).ToList();
         }
 
         public TaskModel? GetTaskById(int id)
         {
-            return _taskRepository.GetById(id);
+            var taskEntity = _taskRepository.GetById(id);
+            return taskEntity?.ToTaskModel();
         }
 
         public int AddTask(TaskModel addingTask)
         {
-            _taskRepository.Add(addingTask);
-            return addingTask.Id;
+            var addingTaskEntity = addingTask.ToTaskEntity();
+            _taskRepository.Add(addingTaskEntity);
+            return addingTaskEntity.Id;
         }
 
         public bool UpdateTask(int id, TaskModel newTask)

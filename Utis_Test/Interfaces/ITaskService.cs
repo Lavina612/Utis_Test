@@ -7,6 +7,8 @@ namespace Utis_Test.Interfaces
     {
         public List<TaskModel> GetAllTasks();
 
+        public List<TaskModel> GetTasksByStatus(string status);
+
         public TaskModel? GetTaskById(int id);
 
         public int AddTask(TaskModel task);
