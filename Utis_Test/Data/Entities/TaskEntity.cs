@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Utis_Test.Models;
 
@@ -29,17 +28,26 @@ namespace Utis_Test.Data.Entities
             StatusId = statusId;
         }
 
+        public TaskEntity(int id, string title, string description, DateTime dueDate, string statusName)
+        {
+            Id = id;
+            Title = title;
+            Description = description;
+            DueDate = dueDate;
+            Status = new TaskStatusEntity(-1, statusName);
+        }
+
         public void UpdateProperties(TaskModel newTask)
         {
             Title = newTask.Title;
             Description = newTask.Description;
             DueDate = newTask.DueDate;
-            StatusId = newTask.StatusId;
+            Status.StatusName = newTask.StatusName;
         }
 
         public TaskModel ToTaskModel()
         {
-            return new TaskModel(Id, Title, Description, DueDate, StatusId);
+            return new TaskModel(Id, Title, Description, DueDate, Status.StatusName);
         }
     }
 }

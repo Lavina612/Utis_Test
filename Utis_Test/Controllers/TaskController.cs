@@ -47,7 +47,9 @@ namespace Utis_Test.Controllers
         {
             task.Id = _taskService.AddTask(task);
 
-            return CreatedAtAction(nameof(AddTask), new { id = task.Id }, task);
+            return task.Id == 0
+                ? BadRequest()
+                : CreatedAtAction(nameof(AddTask), new { id = task.Id }, task);
         }
 
         [HttpPut("{id}")]
@@ -55,7 +57,7 @@ namespace Utis_Test.Controllers
         {
             return _taskService.UpdateTask(id, task)
                 ? Ok() 
-                : NotFound();
+                : BadRequest();
         }
 
         [HttpDelete("{id}")]

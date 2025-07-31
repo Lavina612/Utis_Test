@@ -46,8 +46,7 @@ namespace Utis_Test.Services
             if (updatingTask != null)
             {
                 updatingTask.UpdateProperties(newTask);
-                _taskRepository.Update(updatingTask);
-                return true;
+                return _taskRepository.Update(updatingTask);
             }
 
             return false;

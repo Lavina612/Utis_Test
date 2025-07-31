@@ -14,7 +14,7 @@ namespace Utis_Test.Interfaces
 
         public void Add(TaskEntity addingTask);
 
-        public void Update(TaskEntity updatingTask);
+        public bool Update(TaskEntity updatingTask);
 
         public void Delete(TaskEntity deletingTask);
     }

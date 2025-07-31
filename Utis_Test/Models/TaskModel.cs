@@ -13,20 +13,20 @@ namespace Utis_Test.Models
 
         public DateTime DueDate { get; set; }
 
-        public int StatusId { get; set; }
+        public string StatusName { get; set; } 
 
-        public TaskModel(int? id, string title, string description, DateTime dueDate, int statusId)
+        public TaskModel(int? id, string title, string description, DateTime dueDate, string statusName)
         {
             Id = id;
             Title = title;
             Description = description;
             DueDate = dueDate;
-            StatusId = statusId;
+            StatusName = statusName;
         }
 
         public TaskEntity ToTaskEntity()
         {
-            return new TaskEntity(Id ?? 0, Title, Description, DueDate, StatusId);
+            return new TaskEntity(Id ?? 0, Title, Description, DueDate, StatusName);
         }
     }
 }
