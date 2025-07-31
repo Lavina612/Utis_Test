@@ -14,15 +14,15 @@ namespace Utis_Test.Services
             _taskRepository = taskRepository;
         }
 
-        public List<TaskModel> GetAllTasks()
+        public List<TaskModel> GetAllTasks(int page, int pageSize)
         {
-            var taskEntities = _taskRepository.GetAll();
+            var taskEntities = _taskRepository.GetAll(page, pageSize);
             return taskEntities.Select(x => x.ToTaskModel()).ToList();
         }
 
-        public List<TaskModel> GetTasksByStatus(string status)
+        public List<TaskModel> GetTasksByStatus(string status, int page, int pageSize)
         {
-            var taskEntities = _taskRepository.GetByStatus(status);
+            var taskEntities = _taskRepository.GetByStatus(status, page, pageSize);
             return taskEntities.Select(x => x.ToTaskModel()).ToList();
         }
 

@@ -17,17 +17,23 @@ namespace Utis_Test.Repositories
             _context = context;
         }
 
-        public List<TaskEntity> GetAll()
+        public List<TaskEntity> GetAll(int page, int pageSize)
         {
             return _context.Tasks
+                .OrderBy(x => x.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Include(x => x.Status)
                 .ToList();
         }
 
-        public List<TaskEntity> GetByStatus(string status)
+        public List<TaskEntity> GetByStatus(string status, int page, int pageSize)
         {
             return _context.Tasks
                 .Where(x => x.Status.StatusName.ToLower() == status.ToLower())
+                .OrderBy(x => x.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Include(x => x.Status)
                 .ToList();
         }

@@ -16,16 +16,16 @@ namespace Utis_Test.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllTasks()
+        public IActionResult GetAllTasks([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            var tasks = _taskService.GetAllTasks();
+            var tasks = _taskService.GetAllTasks(page, pageSize);
             return Ok(tasks);
         }
 
         [HttpGet("filter")]
-        public IActionResult GetTasksByStatus([FromQuery] string status)
+        public IActionResult GetTasksByStatus([FromQuery] string status, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            var tasks = _taskService.GetTasksByStatus(status);
+            var tasks = _taskService.GetTasksByStatus(status, page, pageSize);
             return Ok(tasks);
         }
 

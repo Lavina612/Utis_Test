@@ -5,9 +5,9 @@ namespace Utis_Test.Interfaces
 {
     public interface ITaskService
     {
-        public List<TaskModel> GetAllTasks();
+        public List<TaskModel> GetAllTasks(int page, int pageSize);
 
-        public List<TaskModel> GetTasksByStatus(string status);
+        public List<TaskModel> GetTasksByStatus(string status, int page, int pageSize);
 
         public TaskModel? GetTaskById(int id);
 

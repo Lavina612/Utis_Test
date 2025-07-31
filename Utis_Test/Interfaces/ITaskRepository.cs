@@ -6,9 +6,9 @@ namespace Utis_Test.Interfaces
 {
     public interface ITaskRepository
     {
-        public List<TaskEntity> GetAll();
+        public List<TaskEntity> GetAll(int page, int pageSize);
 
-        public List<TaskEntity> GetByStatus(string status);
+        public List<TaskEntity> GetByStatus(string status, int page, int pageSize);
 
         public TaskEntity? GetById(int id);
 
