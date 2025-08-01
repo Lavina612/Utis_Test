@@ -45,7 +45,7 @@ namespace Utis_Test.Data.Entities
 
         public TaskModel ToTaskModel()
         {
-            return new TaskModel(Id, Title, Description, DueDate, Status.StatusName);
+            return new TaskModel(Id, Title, Description, DueDate, Status.Name);
         }
     }
 }

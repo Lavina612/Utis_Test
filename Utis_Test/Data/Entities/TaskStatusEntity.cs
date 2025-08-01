@@ -4,12 +4,12 @@
     {
         public int Id { get; set; }
 
-        public string StatusName { get; set; }
+        public string Name { get; set; }
 
-        public TaskStatusEntity(int id, string statusName)
+        public TaskStatusEntity(int id, string name)
         {
             Id = id;
-            StatusName = statusName;
+            Name = name;
         }
     }
 }

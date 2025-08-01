@@ -59,7 +59,7 @@ namespace Utis_Test.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("StatusName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -71,22 +71,22 @@ namespace Utis_Test.Migrations
                         new
                         {
                             Id = 1,
-                            StatusName = "New"
+                            Name = "New"
                         },
                         new
                         {
                             Id = 2,
-                            StatusName = "InProgress"
+                            Name = "InProgress"
                         },
                         new
                         {
                             Id = 3,
-                            StatusName = "Completed"
+                            Name = "Completed"
                         },
                         new
                         {
                             Id = 4,
-                            StatusName = "Overdue"
+                            Name = "Overdue"
                         });
                 });
 

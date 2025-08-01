@@ -20,7 +20,7 @@ namespace Utis_Test.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    StatusName = table.Column<string>(type: "text", nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,7 +51,7 @@ namespace Utis_Test.Migrations
 
             migrationBuilder.InsertData(
                 table: "TaskStatuses",
-                columns: new[] { "Id", "StatusName" },
+                columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
                     { 1, "New" },

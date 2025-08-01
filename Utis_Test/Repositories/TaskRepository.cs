@@ -30,7 +30,7 @@ namespace Utis_Test.Repositories
         public List<TaskEntity> GetByStatus(string status, int page, int pageSize)
         {
             return _context.Tasks
-                .Where(x => x.Status.StatusName.ToLower() == status.ToLower())
+                .Where(x => x.Status.Name.ToLower() == status.ToLower())
                 .OrderBy(x => x.Id)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
@@ -65,7 +65,7 @@ namespace Utis_Test.Repositories
 
         public int? GetStatusIdByStatusName(string statusName)
         {
-            var status = _context.TaskStatuses.FirstOrDefault(x => x.StatusName.ToLower() == statusName.ToLower());
+            var status = _context.TaskStatuses.FirstOrDefault(x => x.Name.ToLower() == statusName.ToLower());
             return status?.Id;
         }
     }
