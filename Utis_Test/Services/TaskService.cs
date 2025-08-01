@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Utis_Test.Data.Entities;
 using Utis_Test.Interfaces;
 using Utis_Test.Models;
 
@@ -34,22 +35,22 @@ namespace Utis_Test.Services
 
         public int AddTask(TaskModel addingTask)
         {
-            var addingTaskEntity = addingTask.ToTaskEntity();
+            var addingTaskEntity = ConvertTaskModelToTaskEntity(addingTask);
+            if (addingTaskEntity == null)
+                return 0;
+
             _taskRepository.Add(addingTaskEntity);
             return addingTaskEntity.Id;
         }
 
         public bool UpdateTask(int id, TaskModel newTask)
         {
-            var updatingTask = _taskRepository.GetById(id);
+            var updatingTask = UpdateTaskEntityByTaskModelProperties(id, newTask);
+            if (updatingTask == null)
+                return false;
 
-            if (updatingTask != null)
-            {
-                updatingTask.UpdateProperties(newTask);
-                return _taskRepository.Update(updatingTask);
-            }
-
-            return false;
+            _taskRepository.Update(updatingTask);
+            return true;
         }
 
         public void DeleteTask(int id)
@@ -60,6 +61,36 @@ namespace Utis_Test.Services
             {
                 _taskRepository.Delete(deletingTask);
             }
+        }
+
+        private TaskEntity? ConvertTaskModelToTaskEntity(TaskModel taskModel)
+        {
+            var statusId = _taskRepository.GetStatusIdByStatusName(taskModel.StatusName);
+            if (statusId == null)
+                return null;
+
+
+            var taskEntity = taskModel.ToTaskEntity();
+            taskEntity.StatusId = statusId.Value;
+            return taskEntity;
+        }
+
+        private TaskEntity? UpdateTaskEntityByTaskModelProperties(int id, TaskModel taskModel)
+        {
+            var statusId = _taskRepository.GetStatusIdByStatusName(taskModel.StatusName);
+            if (statusId == null)
+                return null;
+
+            var updatingTask = _taskRepository.GetById(id);
+
+            if (updatingTask != null)
+            {
+                updatingTask.UpdateProperties(taskModel);
+                updatingTask.StatusId = statusId.Value;
+                return updatingTask;
+            }
+
+            return null;
         }
     }
 }

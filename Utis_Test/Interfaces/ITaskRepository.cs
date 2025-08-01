@@ -14,8 +14,10 @@ namespace Utis_Test.Interfaces
 
         public void Add(TaskEntity addingTask);
 
-        public bool Update(TaskEntity updatingTask);
+        public void Update(TaskEntity updatingTask);
 
         public void Delete(TaskEntity deletingTask);
+
+        public int? GetStatusIdByStatusName(string statusName);
     }
 }

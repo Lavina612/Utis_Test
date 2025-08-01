@@ -26,7 +26,7 @@ namespace Utis_Test.Models
 
         public TaskEntity ToTaskEntity()
         {
-            return new TaskEntity(Id ?? 0, Title, Description, DueDate, StatusName);
+            return new TaskEntity(Id ?? 0, Title, Description, DueDate);
         }
     }
 }

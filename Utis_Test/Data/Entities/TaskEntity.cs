@@ -28,13 +28,12 @@ namespace Utis_Test.Data.Entities
             StatusId = statusId;
         }
 
-        public TaskEntity(int id, string title, string description, DateTime dueDate, string statusName)
+        public TaskEntity(int id, string title, string description, DateTime dueDate)
         {
             Id = id;
             Title = title;
             Description = description;
             DueDate = dueDate;
-            Status = new TaskStatusEntity(-1, statusName);
         }
 
         public void UpdateProperties(TaskModel newTask)
@@ -42,7 +41,6 @@ namespace Utis_Test.Data.Entities
             Title = newTask.Title;
             Description = newTask.Description;
             DueDate = newTask.DueDate;
-            Status.StatusName = newTask.StatusName;
         }
 
         public TaskModel ToTaskModel()

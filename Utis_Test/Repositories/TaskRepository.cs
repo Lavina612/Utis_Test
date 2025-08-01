@@ -47,43 +47,26 @@ namespace Utis_Test.Repositories
 
         public void Add(TaskEntity addingTask)
         {
-            try
-            {
-                addingTask.Status = _context.TaskStatuses
-                    .First(x => x.StatusName.ToLower() == addingTask.Status.StatusName.ToLower());
-            }
-            catch (InvalidOperationException ex)
-            {
-                //логирование
-                return;
-            }
-
             _context.Tasks.Add(addingTask);
             _context.SaveChanges();
         }
 
-        public bool Update(TaskEntity updatingTask)
+        public void Update(TaskEntity updatingTask)
         {
-            try
-            {
-                updatingTask.Status = _context.TaskStatuses
-                    .First(x => x.StatusName.ToLower() == updatingTask.Status.StatusName.ToLower());
-            }
-            catch (InvalidOperationException ex)
-            {
-                //логирование
-                return false;
-            }
-
             _context.Tasks.Update(updatingTask);
             _context.SaveChanges();
-            return true;
         }
 
         public void Delete(TaskEntity deletingTask)
         {
             _context.Tasks.Remove(deletingTask);
             _context.SaveChanges();
+        }
+
+        public int? GetStatusIdByStatusName(string statusName)
+        {
+            var status = _context.TaskStatuses.FirstOrDefault(x => x.StatusName.ToLower() == statusName.ToLower());
+            return status?.Id;
         }
     }
 }
