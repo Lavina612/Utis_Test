@@ -16,10 +16,6 @@ namespace Utis_Test.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<TaskModel>()
-            //.Property(x => x.Status)
-            //.HasConversion(new EnumToStringConverter<TaskStatus>());
-
             foreach (TaskStatusEnum status in Enum.GetValues(typeof(TaskStatusEnum)))
             {
                 modelBuilder.Entity<TaskStatusEntity>().HasData(new TaskStatusEntity((int)status, status.ToString()));

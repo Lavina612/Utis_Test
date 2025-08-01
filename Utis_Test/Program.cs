@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using Utis_Test.Data;
 using Utis_Test.Interfaces;
@@ -28,16 +29,24 @@ namespace Utis_Test
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
             ConfigureServices(builder);
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            using (var scope = app.Services.CreateScope())
+            {
+                var logger = app.Services.GetRequiredService<ILogger<Program>>();
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+                logger.LogWarning("!!! При первом запуске, когда БД ещё не создана, ниже может возникнуть ошибка" +
+                    "\"Microsoft.EntityFrameworkCore.Database.Connection[20004] " +
+                    "An error occurred using the connection to database '<db_name>' on server 'tcp://localhost:<db_port>'.\"," +
+                    "которая ни на что не влияет. БД создаётся, заполняется, приложение работает. !!!");
+
+                dbContext.Database.Migrate();
+            }
 
             app.UseHttpsRedirection();
-            app.UseAuthorization();
             app.MapControllers();
 
             app.Run();

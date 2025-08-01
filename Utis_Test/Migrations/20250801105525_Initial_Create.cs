@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Utis_Test.Migrations
 {
     /// <inheritdoc />
-    public partial class Migration_1 : Migration
+    public partial class Initial_Create : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,11 +36,17 @@ namespace Utis_Test.Migrations
                     Title = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     DueDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Status = table.Column<int>(type: "integer", nullable: false)
+                    StatusId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tasks_TaskStatuses_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "TaskStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -53,16 +59,21 @@ namespace Utis_Test.Migrations
                     { 3, "Completed" },
                     { 4, "Overdue" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasks_StatusId",
+                table: "Tasks",
+                column: "StatusId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "TaskStatuses");
+                name: "Tasks");
 
             migrationBuilder.DropTable(
-                name: "Tasks");
+                name: "TaskStatuses");
         }
     }
 }

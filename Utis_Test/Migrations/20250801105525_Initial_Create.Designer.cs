@@ -12,8 +12,8 @@ using Utis_Test.Data;
 namespace Utis_Test.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250730162544_Migration_2")]
-    partial class Migration_2
+    [Migration("20250801105525_Initial_Create")]
+    partial class Initial_Create
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Utis_Test.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Utis_Test.Models.TaskModel", b =>
+            modelBuilder.Entity("Utis_Test.Data.Entities.TaskEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -54,7 +54,7 @@ namespace Utis_Test.Migrations
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("Utis_Test.Models.TaskStatuses", b =>
+            modelBuilder.Entity("Utis_Test.Data.Entities.TaskStatusEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -93,9 +93,9 @@ namespace Utis_Test.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Utis_Test.Models.TaskModel", b =>
+            modelBuilder.Entity("Utis_Test.Data.Entities.TaskEntity", b =>
                 {
-                    b.HasOne("Utis_Test.Models.TaskStatuses", "Status")
+                    b.HasOne("Utis_Test.Data.Entities.TaskStatusEntity", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
