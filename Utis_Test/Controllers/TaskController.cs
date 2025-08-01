@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using Utis_Test.Interfaces;
 using Utis_Test.Models;
 
@@ -10,14 +12,19 @@ namespace Utis_Test.Controllers
     {
         private readonly ITaskService _taskService;
 
-        public TaskController(ITaskService taskService)
+        private readonly ILogger<TaskController> _logger;
+
+        public TaskController(ITaskService taskService, ILogger<TaskController> logger)
         {
             _taskService = taskService;
+            _logger = logger;
         }
 
         [HttpGet]
         public IActionResult GetAllTasks([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
+            _logger.LogInformation($"{DateTime.UtcNow.ToLongTimeString()}: Received GET request with params page = {page}, pageSize = {pageSize}.");
+
             var tasks = _taskService.GetAllTasks(page, pageSize);
             return Ok(tasks);
         }
@@ -25,6 +32,9 @@ namespace Utis_Test.Controllers
         [HttpGet("filter")]
         public IActionResult GetTasksByStatus([FromQuery] string status, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
+            _logger.LogInformation($"{DateTime.UtcNow.ToLongTimeString()}: Received GET /filter request with params status = {status}, page = {page}, pageSize = {pageSize}.");
+
+
             var tasks = _taskService.GetTasksByStatus(status, page, pageSize);
             return Ok(tasks);
         }
@@ -32,6 +42,9 @@ namespace Utis_Test.Controllers
         [HttpGet("{id}")]
         public IActionResult GetTaskById(int id)
         {
+            _logger.LogInformation($"{DateTime.UtcNow.ToLongTimeString()}: Received GET /<id> request.");
+
+
             var task = _taskService.GetTaskById(id);
 
             if (task == null)
@@ -45,6 +58,9 @@ namespace Utis_Test.Controllers
         [HttpPost]
         public IActionResult AddTask([FromBody] TaskModel task)
         {
+            _logger.LogInformation($"{DateTime.UtcNow.ToLongTimeString()}: Received POST request with Task: {task}.");
+
+
             task.Id = _taskService.AddTask(task);
 
             return task.Id == 0
@@ -55,6 +71,9 @@ namespace Utis_Test.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateTask(int id, [FromBody] TaskModel task)
         {
+            _logger.LogInformation($"{DateTime.UtcNow.ToLongTimeString()}: Received PUT request on update task with id = {id} and new properties: {task}.");
+
+
             return _taskService.UpdateTask(id, task)
                 ? Ok() 
                 : BadRequest();
@@ -63,6 +82,9 @@ namespace Utis_Test.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteTask(int id)
         {
+            _logger.LogInformation($"{DateTime.UtcNow.ToLongTimeString()}: Received DELETE request with id = {id}.");
+
+
             _taskService.DeleteTask(id);
             return NoContent();
         }

@@ -28,5 +28,10 @@ namespace Utis_Test.Models
         {
             return new TaskEntity(Id ?? 0, Title, Description, DueDate);
         }
+
+        public override string ToString()
+        {
+            return $"Id = {Id ?? 0}, Title = {Title}, Description = {Description}, DueDate = {DueDate}, Status = {StatusName}";
+        }
     }
 }
